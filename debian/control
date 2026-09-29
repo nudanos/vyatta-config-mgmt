@@ -1,19 +1,21 @@
 Source: vyatta-config-mgmt
-Section: contrib/net
+Section: net
 Priority: optional
-Maintainer: Vyatta Package Maintainers <DL-vyatta-help@att.com>
-Build-Depends:
- debhelper (>= 9),
+Maintainer: NuDanOS Maintainers <jon@fernandez.tech>
+Build-Depends: debhelper-compat (= 13),
  dh-yang,
  dh-vci,
  dh-python,
  python3-all
-Standards-Version: 3.7.2
+Standards-Version: 4.7.2
 X-Python3-Version: >= 3.2
+Rules-Requires-Root: no
+Vcs-Git: https://github.com/nudanos/vyatta-config-mgmt.git
+Vcs-Browser: https://github.com/nudanos/vyatta-config-mgmt
 
 Package: vyatta-config-mgmt
 Architecture: all
-Depends:
+Depends: 
  cli-shell-api,
  config-utils,
  libsort-versions-perl,
@@ -36,13 +38,12 @@ Description: Vyatta commands for config-mgmt
 
 Package: vyatta-system-mgmt-v1-yang
 Architecture: all
-Depends:
+Depends: 
  vyatta-cfg (>= 0.15.33),
  vyatta-config-mgmt(= ${binary:Version}),
  ${misc:Depends},
  ${yang:Depends}
-Section: contrib/admin
-Priority: optional
+Section: admin
 Description: vyatta-system-mgmt-v1 module
  The YANG module for vyatta-system-mgmt-v1
 Conflicts: vyatta-config-mgmt (<< 0.50), vyatta-system-mgmt-yang
@@ -51,32 +52,28 @@ Replaces: vyatta-config-mgmt (<< 0.50)
 Package: vyatta-system-mgmt-routing-instance-v1-yang
 Architecture: all
 Depends: vyatta-system-mgmt-v1-yang, ${misc:Depends}, ${yang:Depends}
-Section: contrib/admin
-Priority: optional
+Section: admin
 Description: vyatta-system-mgmt-routing-instance-v1 module
  The YANG module for vyatta-system-mgmt-routing-instance-v1
 
 Package: vyatta-config-rollback-v1-yang
 Architecture: all
 Depends: ${misc:Depends}, ${yang:Depends}
-Section: contrib/admin
-Priority: optional
+Section: admin
 Description: vyatta-config-rollback-v1 module
  The YANG module for vyatta-config-rollback-v1
 
 Package: vyatta-config-rollback-vci
 Architecture: all
 Depends: ephemerad, vyatta-config-rollback-v1-yang, ${misc:Depends}
-Section: contrib/admin
-Priority: optional
+Section: admin
 Description: Configuration rollback VCI component
  The ephemeral VCI component for config rollback
 
 Package: python3-lib-vyatta-config-mgmt
-Section: contrib/python
+Section: python
 Architecture: any
 Depends: ${misc:Depends}, ${python3:Depends},
 Description: Python 3 library for handling GRUB config recovery menu
  Python 3 library that parses the commit history file, presents it
  to the user, and returns the user's chosen commit version.
-
