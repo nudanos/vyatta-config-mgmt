@@ -1,3 +1,3 @@
-lib/vci-rollback-ephemeral/vyatta-config-rollback.instance lib/vci/ephemera/instances
-lib/vci-rollback-ephemeral/vci-rollback lib/vci-rollback-ephemeral/
-lib/vci-rollback-ephemeral/rollback-action lib/vci-rollback-ephemeral/
+lib/vci-rollback-ephemeral/vyatta-config-rollback.instance usr/lib/vci/ephemera/instances
+lib/vci-rollback-ephemeral/vci-rollback usr/lib/vci-rollback-ephemeral/
+lib/vci-rollback-ephemeral/rollback-action usr/lib/vci-rollback-ephemeral/
