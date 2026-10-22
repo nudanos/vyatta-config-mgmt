@@ -1,0 +1,2 @@
+#!/bin/sh
+printf 'chgrp %s\n' "$*" >> "$STUB_LOG"

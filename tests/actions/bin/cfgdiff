@@ -1,0 +1,7 @@
+#!/bin/sh
+# test stub: cfgdiff -ctxdiff A B (the files are /dev/fd pipes)
+shift
+echo "--- a"
+sed 's/^/- /' "$1"
+echo "+++ b"
+sed 's/^/+ /' "$2"

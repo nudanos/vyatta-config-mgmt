@@ -1,0 +1,10 @@
+exit 0
+--- output
+persist-id does not match pending confirmed commit
+
+--- commands
+
+--- files
+config/
+config/confirmed_commit.job: {"job":"7","persist-id":"p1","session":"s1","time":"2026-10-22 10:00:00"}
+

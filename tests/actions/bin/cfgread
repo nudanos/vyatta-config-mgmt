@@ -1,0 +1,6 @@
+#!/bin/sh
+# test stub: cfgread [-raw] FILE
+raw=
+[ "$1" = -raw ] && { raw=" (raw)"; shift; }
+echo "cfgread$raw $(basename "$1"):"
+zcat -f "$1"

@@ -1,0 +1,22 @@
+exit 0
+--- output
+
+--- commands
+chgrp vyattacfg ROOT/config/archive
+chgrp vyattacfg ROOT/config/archive/commits
+sg vyattacfg export COMMIT_VIA=init; /opt/vyatta/sbin/vyatta-commit-revs.pl baseline config.boot
+
+--- files
+config/
+config/archive/
+config/archive/commits: 
+config/archive/lr.conf: ROOT/config/archive/config.boot {
+	rotate 5
+	start 0
+	compress
+	copy
+	su root vyattacfg
+}
+
+hooks/
+hooks/01vyatta-commit-revs.pl -> /opt/vyatta/sbin/vyatta-commit-revs.pl

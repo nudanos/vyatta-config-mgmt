@@ -1,0 +1,3 @@
+#!/bin/sh
+# test stub: the old script asked date for the seconds
+echo 00

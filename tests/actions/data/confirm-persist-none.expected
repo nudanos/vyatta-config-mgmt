@@ -1,0 +1,8 @@
+exit 0
+--- output
+No confirmed commit pending
+
+--- commands
+
+--- files
+config/

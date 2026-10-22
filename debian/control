@@ -6,6 +6,10 @@ Build-Depends: debhelper-compat (= 13),
  dh-yang,
  dh-vci,
  dh-python,
+ libjson-perl <!nocheck>,
+ libsort-versions-perl <!nocheck>,
+ liburi-perl <!nocheck>,
+ logrotate <!nocheck>,
  python3-all
 Standards-Version: 4.7.2
 X-Python3-Version: >= 3.2

@@ -1,0 +1,9 @@
+#!/bin/sh
+# test stub
+case "$1" in
+getPostCommitHookDir) printf '%s' "$CM_TEST_ROOT/hooks" ;;
+sessionChanged) printf 'cli-shell-api sessionChanged\n' >> "$STUB_LOG"; exit "${STUB_SESSION_UNCHANGED:-0}" ;;
+showConfig) echo "working: system host-name r1" ;;
+showCfg) echo "active: system host-name r0" ;;
+*) echo "cli-shell-api stub: $*" >&2; exit 2 ;;
+esac

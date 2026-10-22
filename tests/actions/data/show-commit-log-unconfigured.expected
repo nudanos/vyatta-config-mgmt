@@ -1,0 +1,25 @@
+exit 0
+--- output
+commit-revisions is not configured.
+
+0   2023-11-14 22:13:20 by alice
+    first change
+1   2023-11-14 22:15:00 by bob
+2   2023-11-14 22:16:40 by carol
+    with | pipe
+
+--- commands
+
+--- files
+config/
+config/archive/
+config/archive/commits: |1700000000|alice|cli|first change|
+|1700000100|bob|cli|commit|
+|1700000200|carol|netconf|with %% pipe|
+
+config/archive/config.boot.0.gz (gz): system { host-name r0 }
+
+config/archive/config.boot.1.gz (gz): system { host-name r1 }
+
+config/archive/config.boot.2.gz (gz): system { host-name r2 }
+

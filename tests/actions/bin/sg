@@ -1,0 +1,2 @@
+#!/bin/sh
+printf 'sg %s\n' "$*" >> "$STUB_LOG"

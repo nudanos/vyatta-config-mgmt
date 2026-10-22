@@ -1,0 +1,26 @@
+exit 0
+--- output
+confirmed-commit [120]
+confirmed commit will be reverted in 120 seconds unless there is a confirming commit
+
+--- commands
+at now + N minutes
+  stdin: /opt/vyatta/sbin/lu -user configd "/opt/vyatta/sbin/revert_confirmed_commit.sh"
+
+--- files
+config/
+config/archive/
+config/archive/commits: |1700000000|alice|cli|first change|
+|1700000100|bob|cli|commit|
+|1700000200|carol|netconf|with %% pipe|
+
+config/archive/config.boot.0.gz (gz): system { host-name r0 }
+
+config/archive/config.boot.1.gz (gz): system { host-name r1 }
+
+config/archive/config.boot.2.gz (gz): system { host-name r2 }
+
+config/archive/config.boot.revert.gz (gz): system { host-name r1 }
+
+config/confirmed_commit.job: {"job":"42","persist-id":"p1","session":"s1","time":"2026-10-22 10:00:00"}
+

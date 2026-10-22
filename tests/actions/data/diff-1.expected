@@ -1,0 +1,23 @@
+exit 0
+--- output
+--- a
+- working: system host-name r1
++++ b
++ cfgread config.boot.1.gz:
++ system { host-name r1 }
+
+--- commands
+
+--- files
+config/
+config/archive/
+config/archive/commits: |1700000000|alice|cli|first change|
+|1700000100|bob|cli|commit|
+|1700000200|carol|netconf|with %% pipe|
+
+config/archive/config.boot.0.gz (gz): system { host-name r0 }
+
+config/archive/config.boot.1.gz (gz): system { host-name r1 }
+
+config/archive/config.boot.2.gz (gz): system { host-name r2 }
+

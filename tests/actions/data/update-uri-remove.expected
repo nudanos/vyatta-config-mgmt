@@ -1,0 +1,10 @@
+exit 0
+--- output
+
+--- commands
+
+--- files
+config/
+config/archive/
+hooks/
+hooks/02vyatta-commit-push.pl -> /opt/vyatta/sbin/vyatta-commit-push.pl

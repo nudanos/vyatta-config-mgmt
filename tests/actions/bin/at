@@ -1,0 +1,9 @@
+#!/bin/sh
+# test stub: records the request; prints at's job line (on stderr, as at does)
+{ printf 'at %s\n' "$*"; sed 's/^/  stdin: /'; } >> "$STUB_LOG"
+if [ -n "${STUB_AT_FAIL:-}" ]; then
+    echo "at: error: cannot schedule" >&2
+    exit 1
+fi
+echo "warning: commands will be executed using /bin/sh" >&2
+echo "job 42 at Wed Oct 22 10:00:00 2026" >&2
