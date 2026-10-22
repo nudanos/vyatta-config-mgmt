@@ -133,7 +133,7 @@ mv $restore_file $CONFIG_FILE
 # Get timestamp of commit we are restoring to add to commit message and
 # convert to pretty-print format
 #
-let line=$version+1
+line=$((version + 1))
 commit_ts=$(head -n $line $COMMITS_FILE | tail -n 1 | cut -d'|' -f2)
 pretty_ts=$(date --date="@$commit_ts" '+%Y-%m-%d %H:%M:%S')
 

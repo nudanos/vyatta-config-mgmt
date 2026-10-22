@@ -4,8 +4,8 @@ package Vyatta::Config;
 use strict;
 use warnings;
 
-sub new { return bless {}, shift; }
-sub setLevel { my ( $self, $level ) = @_; $self->{level} = $level; return; }
+sub new       { return bless {}, shift; }
+sub setLevel  { my ( $self, $level ) = @_; $self->{level} = $level; return; }
 sub inSession { return 0; }
 
 sub returnOrigValue {

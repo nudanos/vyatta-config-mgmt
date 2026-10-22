@@ -31,16 +31,15 @@ sub report_netconf_error {
 
 # rollback_rpc handles the vyatta-config-rollback-v1:rollback RPC
 sub rollback_rpc {
-    my $stdin = do { local $/ = undef; <> };
-    my $input = decode_json $stdin;
+    my $stdin    = do { local $/ = undef; <> };
+    my $input    = decode_json $stdin;
     my $revision = $input->{'vyatta-config-rollback-v1:revision-id'} // 1;
     my $comment  = $input->{'vyatta-config-rollback-v1:comment'}     // "";
     my $result;
 
     my @cmd = (
-        "/opt/vyatta/sbin/lu", "-user", "configd",
-        "/lib/vci-rollback-ephemeral/rollback-action",
-        "$revision", "$comment"
+        "/opt/vyatta/sbin/lu", "-user", "configd", "/lib/vci-rollback-ephemeral/rollback-action",
+        "$revision",           "$comment"
     );
 
     run3( \@cmd, \undef, \undef, \$result );

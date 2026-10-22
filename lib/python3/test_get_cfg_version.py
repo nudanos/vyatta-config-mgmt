@@ -2,7 +2,9 @@
 """Unit tests for get_cfg_version"""
 
 import unittest
+from unittest import mock
 import get_cfg_version as gcv
+
 
 class MenuDisplayTest(unittest.TestCase):
     """Unit Tests for displaying GRUB config recovery menu"""
@@ -29,12 +31,10 @@ class MenuDisplayTest(unittest.TestCase):
     ENTRY_13 = "13\t2016-11-22 09:38:17 by configd\n\tfourteenth\n"
     ENTRY_14 = "14\t2016-11-22 09:35:31 by configd\n\tfifteenth\n"
 
-
     def test_4menu_num_options(self):
         """Check 4-option menu parsing returns correct number of options"""
         menu_options = gcv.read_menu_options("testdata/4-commits")
         self.assertEqual(len(menu_options), 4)
-
 
     def test_4menu_show_0_to_4(self):
         """Check 4 options are shown correctly with Q, but no P or N"""
@@ -50,12 +50,10 @@ class MenuDisplayTest(unittest.TestCase):
         self.assertFalse(self.ENTRY_4 in menu_text)
         self.assertFalse(self.NEXT in menu_text)
 
-
     def test_8menu_num_options(self):
         """Check 8-option menu parsing returns correct number of options"""
         menu_options = gcv.read_menu_options("testdata/8-commits")
         self.assertEqual(len(menu_options), 8)
-
 
     def test_8menu_show_5_to_9(self):
         """Check last 3 options shown correctly with P and Q.
@@ -73,12 +71,10 @@ class MenuDisplayTest(unittest.TestCase):
         self.assertFalse(self.ENTRY_8 in menu_text)
         self.assertFalse(self.NEXT in menu_text)
 
-
     def test_15menu_num_options(self):
         """Check 15-option menu parsing returns correct number of options"""
         menu_options = gcv.read_menu_options("testdata/15-commits")
         self.assertEqual(len(menu_options), 15)
-
 
     def test_15menu_show_5_to_9(self):
         """Check middle 5 options shown correctly with P, N and Q"""
@@ -95,7 +91,6 @@ class MenuDisplayTest(unittest.TestCase):
         self.assertFalse(self.ENTRY_4 in menu_text)
         self.assertFalse(self.ENTRY_10 in menu_text)
 
-
     def test_15menu_entry7_no_comment(self):
         """Check entry with no comment is handled correctly"""
         menu_options = gcv.read_menu_options("testdata/15-commits")
@@ -104,7 +99,6 @@ class MenuDisplayTest(unittest.TestCase):
         # Check no blank line in between the options
         expected = self.ENTRY_7 + self.ENTRY_8
         self.assertTrue(expected in menu_text)
-
 
     def test_15menu_show_10_to_14(self):
         """Check last 5 options shown correctly with P and Q.
@@ -126,3 +120,22 @@ class MenuDisplayTest(unittest.TestCase):
 # Main program
 if __name__ == "__main__":
     unittest.main()
+
+
+class MenuChoiceTest(unittest.TestCase):
+    """Unit tests for choosing a revision from the menu"""
+
+    def choose(self, *answers):
+        menu_options = gcv.read_menu_options("testdata/4-commits")
+        with mock.patch.object(gcv.sp, "call"), \
+                mock.patch("builtins.input", side_effect=list(answers)), \
+                mock.patch("builtins.print"):
+            return gcv.display_menu(menu_options)
+
+    def test_last_revision(self):
+        """Revisions 0-3 of 4 commits can be chosen"""
+        self.assertEqual(self.choose("3"), 3)
+
+    def test_one_past_the_last_revision(self):
+        """4 commits have no revision 4: asked again, then Q"""
+        self.assertEqual(self.choose("4", "", "q"), 0)

@@ -35,6 +35,7 @@ USER = 2
 VIA = 3
 COMMENT = 4
 
+
 #
 # print_banner
 #
@@ -82,11 +83,11 @@ def print_menu_subsection(options, first, last):
             break
         menu_entry = options[index]
         readable_time = datetime.fromtimestamp(int(menu_entry[TIMESTAMP]))
-        menu += "%s\t%s by %s\n" % (index, readable_time, menu_entry[USER])
+        menu += f"{index}\t{readable_time} by {menu_entry[USER]}\n"
 
         # We have a comment so print it.
         if menu_entry[COMMENT] != "":
-            menu += "\t%s\n" % menu_entry[COMMENT]
+            menu += f"\t{menu_entry[COMMENT]}\n"
 
     if all_present_and_correct and index < (len(options) - 1):
         menu += "N\tNext\n"
@@ -111,36 +112,36 @@ def display_menu(options):
 
         option = input(PROMPT)
 
-        if (option == 'p' or option == 'P') and (first != 0):
+        if option in ('p', 'P') and first != 0:
             first = first - MAX_ENTRIES_PER_PAGE
             last = last - MAX_ENTRIES_PER_PAGE
             continue
 
-        elif (option == 'n' or option == 'N') and last < num_entries:
+        if option in ('n', 'N') and last < num_entries:
             first = first + MAX_ENTRIES_PER_PAGE
             last = last + MAX_ENTRIES_PER_PAGE
             continue
 
-        elif option == 'q' or option == 'Q':
+        if option in ('q', 'Q'):
             option = '0'
             break
 
-        # Check for numeric value
+        # Check for numeric value; revisions run 0 to num_entries - 1
+        # (num_entries itself was accepted, one past the last)
         try:
             revision = int(option)
-            if (revision >= first and revision <= last and
-                    revision <= num_entries):
+            if first <= revision <= last and revision < num_entries:
                 break
-            else:
-                print("Invalid config version: %s" % option)
-                input("Press any key to continue ...")
+            print(f"Invalid config version: {option}")
+            input("Press any key to continue ...")
         except ValueError:
-            print("Invalid option: %s" % option)
+            print(f"Invalid option: {option}")
             input("Press any key to continue ...")
 
     # User wishes to continue booting.  If option = 0, this is a no-op.
     # If > 0, config is to be replaced.
     return int(option)
+
 
 #
 # read_menu_options
@@ -150,17 +151,15 @@ def read_menu_options(filename):
 
     # Set up menu_actions
     try:
-        version_fh = open(filename, "r")
+        with open(filename, "r", encoding="utf-8") as version_fh:
+            raw_versions = version_fh.readlines()
     except IOError:
         print("Unable to find previous revisions.\n")
         return None
 
-    raw_versions = version_fh.readlines()
     options = []
     for line in raw_versions:
         options.append(line.split("|"))
-
-    version_fh.close()
     return options
 
 

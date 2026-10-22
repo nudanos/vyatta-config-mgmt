@@ -10,19 +10,19 @@
 
 use strict;
 use warnings 'all';
-use Test::More 'no_plan';  # or use Test::More 'no_plan';
+use Test::More 'no_plan';    # or use Test::More 'no_plan';
 
 use_ok('Vyatta::Utils');
 
-is(parse_version_string("Hello 1 World"), "");
-is(parse_version_string("Hello 1.2 World"), "1.2");
-is(parse_version_string("Hello 1.2.3 World"), "1.2.3");
-is(parse_version_string("Hello 1.2.3-1 World"), "1.2.3-1");
-is(parse_version_string("Hello 1.2.3.4 World"), "1.2.3.4");
+is( parse_version_string("Hello 1 World"),       "",        "no dotted version" );
+is( parse_version_string("Hello 1.2 World"),     "1.2",     "two parts" );
+is( parse_version_string("Hello 1.2.3 World"),   "1.2.3",   "three parts" );
+is( parse_version_string("Hello 1.2.3-1 World"), "1.2.3-1", "Debian revision" );
+is( parse_version_string("Hello 1.2.3.4 World"), "1.2.3.4", "four parts" );
 
 use_ok('Sort::Versions');
 
-is(versioncmp('3.8.0','3.7.9'), 1);
-is(versioncmp('3.8.0','3.8.0'), 0);
-is(versioncmp('3.8.0','3.8.0+vyatta'), -1);
-is(versioncmp('3.8.0','3.8.1'), -1);
+is( versioncmp( '3.8.0', '3.7.9' ),         1, 'newer' );
+is( versioncmp( '3.8.0', '3.8.0' ),         0, 'equal' );
+is( versioncmp( '3.8.0', '3.8.0+vyatta' ), -1, 'local suffix sorts later' );
+is( versioncmp( '3.8.0', '3.8.1' ),        -1, 'older' );

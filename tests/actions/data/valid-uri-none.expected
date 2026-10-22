@@ -1,6 +1,6 @@
 exit 255
 --- output
-Error: no uri at SCRIPT line N.
+Error: no uri
 
 --- commands
 

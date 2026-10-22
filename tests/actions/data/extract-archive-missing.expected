@@ -1,6 +1,6 @@
 exit 255
 --- output
-Error: must define revnum and destination at SCRIPT line N.
+Error: must define revnum and destination
 
 --- commands
 

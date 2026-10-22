@@ -7,4 +7,5 @@
 override_dh_auto_test:
 ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 	prove -Ilib tests/actions.t tests/logrotate_version.pl
+	cd lib/python3 && TZ=UTC python3 -m unittest test_get_cfg_version
 endif

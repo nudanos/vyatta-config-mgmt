@@ -36,10 +36,10 @@ sub curl_to {
     my $auth   = $u->authority();
     my $path   = $u->path();
     my ( $host, $remote, $user, $pass ) = ( '', '', '', '' );
-    if ( defined $auth and $auth =~ /(.*)\@(.*)/ ) {
+    if ( defined $auth && $auth =~ /(.*)\@(.*)/x ) {
         $host = $2;
         my $userinfo = uri_unescape($1);
-        if ( $userinfo =~ /(.*)\:(.*)/ ) {
+        if ( $userinfo =~ /(.*):(.*)/x ) {
             $user = $1;
             $pass = $2;
         }
@@ -57,12 +57,12 @@ sub curl_to {
     $save_url .= "/" unless substr( $remote, -1 ) eq "/";
     $save_url .= $save_file;
 
-    $ENV{'VYATTA_CURL_USER'} = "$user";
-    $ENV{'VYATTA_CURL_PASS'} = "$pass";
+    # for vyatta-curl-wrapper, run below
+    local $ENV{'VYATTA_CURL_USER'} = "$user";
+    local $ENV{'VYATTA_CURL_PASS'} = "$pass";
 
     my @cmd = ( "vyatta-curl-wrapper", "-s", "-T", $push_file, "$save_url" );
     my $rc;
-    my $stdout;
     if ($vrf) {
         print "  vrf:$vrf $remote ";
         unshift( @cmd, ( "chvrf", $vrf ) );
@@ -72,12 +72,13 @@ sub curl_to {
     }
     print "cmd [@cmd]\n" if $debug;
     $rc = system(@cmd);
-    if ( $rc eq 0 ) {
+    if ( $rc == 0 ) {
         print " OK\n";
     }
     else {
         print " failed\n";
     }
+    return;
 }
 
 my $uris_ref = cm_get_commit_archive_uris();
@@ -99,7 +100,7 @@ if ( -e $last_push_file and compare( $last_push_file, $tmp_push_file ) == 0 ) {
 }
 
 my $timestamp = strftime( ".%Y%m%d_%H%M%S", localtime );
-my $hostname = hostname();
+my $hostname  = hostname();
 $hostname = 'vyatta' if !defined $hostname;
 my $save_file = "config.boot-$hostname" . $timestamp;
 

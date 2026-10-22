@@ -1,6 +1,6 @@
 exit 255
 --- output
-Error: no action at SCRIPT line N.
+Error: no action
 
 --- commands
 

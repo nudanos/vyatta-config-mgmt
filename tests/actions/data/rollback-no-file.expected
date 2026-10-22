@@ -1,6 +1,6 @@
 exit 2
 --- output
-Error: file [/nonexistent] doesn't exist at SCRIPT line N.
+Error: file [/nonexistent] doesn't exist
 
 --- commands
 
