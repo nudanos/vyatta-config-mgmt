@@ -1,3 +1,13 @@
+vyatta-config-mgmt (0.57.7) trixie; urgency=medium
+
+  * Code-quality lint fixes (distro docs/porting.md): analyzer findings
+    fixed, see the git log.
+  * The commit-revision check no longer accepts a revision equal to the
+    number of revisions; the update-uri action reports its failures.
+  * Its actions have tests that run in the build.
+
+ -- NuDanOS Maintainers <jon@fernandez.tech>  Fri, 23 Oct 2026 12:17:29 +0000
+
 vyatta-config-mgmt (0.57.6) trixie; urgency=medium
 
   * Port to Debian 13 (trixie): debhelper-compat 13, Standards-Version 4.7.2, Rules-Requires-Root, NuDanOS Vcs.
